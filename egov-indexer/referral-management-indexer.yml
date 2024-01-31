@@ -1,0 +1,53 @@
+ServiceMaps:
+  serviceName: referralmanagement
+  version: 1.0.0
+  mappings:
+    - topic: transformer-producer-referral-index-v1-topic
+      configKey: INDEX
+      indexes:
+        - name: referral-index-v1
+          type: referral
+          id: $.referral.id
+          isBulk: true
+          jsonPath: $
+          customJsonMapping:
+            indexMapping: { "Data": { } }
+            fieldMapping:
+              - inJsonPath: $
+                outJsonPath: $.Data
+          timeStampField: $.referral.auditDetails.createdTime
+
+    - topic: delete-referral-topic
+      configKey: INDEX
+      indexes:
+        - name: referral-index-v1
+          type: referral
+          id: $.id
+          isBulk: true
+          jsonPath: $.*
+          timeStampField: $.auditDetails.lastModifiedTime
+
+    - topic: transformer-producer-side-effect-index-v1-topic
+      configKey: INDEX
+      indexes:
+        - name: side-effect-index-v1
+          type: side-effect
+          id: $.sideEffect.id
+          isBulk: true
+          jsonPath: $
+          customJsonMapping:
+            indexMapping: { "Data": { } }
+            fieldMapping:
+              - inJsonPath: $
+                outJsonPath: $.Data
+          timeStampField: $.sideEffect.auditDetails.createdTime
+
+    - topic: delete-side-effect-topic
+      configKey: INDEX
+      indexes:
+        - name: side-effect-index-v1
+          type: side-effect
+          id: $.id
+          isBulk: true
+          jsonPath: $.*
+          timeStampField: $.auditDetails.lastModifiedTime
