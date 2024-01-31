@@ -5,6 +5,15 @@ serviceMaps:
       description: Saves a project staff
       fromTopic: save-project-staff-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-STAFF
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.createdBy
+      auditAttributeBasePath: $.*   
       queryMaps:
         - query: INSERT INTO project_staff (id, tenantId, projectId, staffId, startDate, endDate, additionalDetails, createdBy, lastModifiedBy, createdTime, lastModifiedTime, rowVersion, isDeleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);
           basePath: $.*
@@ -29,6 +38,15 @@ serviceMaps:
       description: Update Project Staff
       fromTopic: update-project-staff-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-STAFF-UPDATE
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.*   
       queryMaps:
         - query: UPDATE project_staff SET projectId=?, staffId=?, startDate=?, endDate=?, additionalDetails=?, lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=? WHERE id = ?
           basePath: $.*
@@ -50,6 +68,15 @@ serviceMaps:
       description: Deletes Project Staff
       fromTopic: delete-project-staff-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-STAFF-DELETE
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.*   
       queryMaps:
         - query: UPDATE project_staff SET lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=?, additionalDetails=? WHERE id=?;
           basePath: $.*
@@ -67,6 +94,15 @@ serviceMaps:
       description: Saves a project beneficiary
       fromTopic: save-project-beneficiary-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-BENEFICIARY
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.clientReferenceId
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.createdBy
+      auditAttributeBasePath: $.*   
       queryMaps:
         - query: INSERT INTO project_beneficiary (id, tenantId, projectId, beneficiaryId, clientReferenceId, beneficiaryClientReferenceId, dateOfRegistration, additionalDetails, createdBy, lastModifiedBy, createdTime, lastModifiedTime, rowVersion, isDeleted, clientCreatedTime, clientLastModifiedTime, clientCreatedBy, clientLastModifiedBy, tag) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
           basePath: $.*
@@ -97,6 +133,15 @@ serviceMaps:
       description: Update Project Beneficiary
       fromTopic: update-project-beneficiary-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-BEBEFICIARY-UPDATE
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.clientReferenceId
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.*   
       queryMaps:
         - query: UPDATE project_beneficiary SET projectId=?, beneficiaryId=?, clientReferenceId=?, beneficiaryClientReferenceId=?, dateOfRegistration=?, additionalDetails=?, lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=?, clientLastModifiedTime = ?, clientLastModifiedBy = ?, tag=?  WHERE id = ? AND isDeleted=false
           basePath: $.*
@@ -122,6 +167,15 @@ serviceMaps:
       description: Deletes Project Beneficiaries
       fromTopic: delete-project-beneficiary-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-BENEFICIARY-DELETE
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.*   
       queryMaps:
         - query: UPDATE project_beneficiary SET lastModifiedBy=?, lastModifiedTime=?, clientLastModifiedTime = ?, clientLastModifiedBy = ?, rowVersion=?, isDeleted=?, additionalDetails=? WHERE id=?;
           basePath: $.*
@@ -142,6 +196,15 @@ serviceMaps:
       description: Persists project details in project table
       fromTopic: save-project
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.Projects.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.Projects.*   
       queryMaps:
         - query: INSERT INTO project(id,tenantId,projectNumber,name,projectType,projectTypeId,projectSubType,department,description,referenceId,startDate,endDate,isTaskEnabled,parent,projectHierarchy,natureOfWork,additionalDetails,isDeleted,rowVersion,createdBy,lastModifiedBy,createdTime,lastModifiedTime) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
           basePath: $.Projects.*
@@ -290,6 +353,15 @@ serviceMaps:
       description: Updates project details in project table
       fromTopic: update-project
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-UPDATE
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.Projects.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.Projects.*   
       queryMaps:
         - query: UPDATE project SET name = ?, projectType = ?, projectTypeId = ?, projectSubType = ?, department = ?, description = ?, referenceId = ?, startDate = ?, endDate = ?, isTaskEnabled = ?, natureOfWork = ?, additionalDetails = ?, isDeleted = ?, rowVersion = ?, lastModifiedBy = ?, lastModifiedTime = ? WHERE id = ?;
           basePath: $.Projects.*
@@ -453,6 +525,15 @@ serviceMaps:
       description: Saves a project resourcce
       fromTopic: save-project-resource-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-RESOURCE
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.createdBy
+      auditAttributeBasePath: $.*   
       queryMaps:
         - query: INSERT INTO project_resource (id, tenantId, projectId, productVariantId, isBaseUnitVariant, startDate, endDate, type, createdBy, lastModifiedBy, createdTime, lastModifiedTime, rowVersion, isDeleted) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);
           basePath: $.*
@@ -476,6 +557,15 @@ serviceMaps:
       description: Update a project resourcce
       fromTopic: update-project-resource-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-RESOURCE-UPDATE
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.* 
       queryMaps:
         - query: UPDATE project_resource SET tenantId=?, projectId=?, productVariantId=?, isBaseUnitVariant=?, startDate=?, endDate=?, type=?, lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=? WHERE id = ?
           basePath: $.*
@@ -497,6 +587,15 @@ serviceMaps:
       description: Delete a project resourcce
       fromTopic: delete-project-resource-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-RESOURCE-UPDATE
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.*       
       queryMaps:
         - query: UPDATE project_resource SET lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=?, additionalDetails=?  WHERE id = ?
           basePath: $.*
@@ -514,6 +613,15 @@ serviceMaps:
       description: Saves a project facility
       fromTopic: save-project-facility-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-FACILITY
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.createdBy
+      auditAttributeBasePath: $.*   
       queryMaps:
 
         - query: INSERT INTO project_facility (id, tenantId, projectId, facilityId, additionalDetails, createdBy, lastModifiedBy, createdTime, lastModifiedTime, rowVersion, isDeleted) VALUES (?,?,?,?,?,?,?,?,?,?,?);
@@ -547,6 +655,15 @@ serviceMaps:
       description: Update Project Facility
       fromTopic: update-project-facility-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-FACILITY
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.*   
       queryMaps:
 
         - query: UPDATE project_facility SET projectId=?, facilityId=?, additionalDetails=?, lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=? WHERE id = ?
@@ -574,6 +691,15 @@ serviceMaps:
       description: Deletes Project Facility
       fromTopic: delete-project-facility-topic
       isTransaction: true
+      isAuditEnabled: true
+      module: PROJECT-FACILITY
+      #below there fields are applied on each index if the object is an array
+      objecIdJsonPath: $.id
+      tenantIdJsonPath: $.tenantId
+      transactionCodeJsonPath: $.id
+      #below twofields of audit are applied on the whole object recieved in the kafka
+      userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
+      auditAttributeBasePath: $.*   
       queryMaps:
         - query: UPDATE project_facility SET lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=?, additionalDetails=? WHERE id=?;
           basePath: $.*

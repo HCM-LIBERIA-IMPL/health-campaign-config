@@ -7,7 +7,7 @@ ServiceMaps:
       indexes:
         - name: stock-index-v1
           type: stock
-          id: $.id
+          id: $.clientReferenceId,$.tenantId
           isBulk: true
           jsonPath: $
           customJsonMapping:
@@ -15,7 +15,7 @@ ServiceMaps:
             fieldMapping:
               - inJsonPath: $
                 outJsonPath: $.Data
-          timeStampField: $.lastModifiedTime
+          timeStampField: $.createdTime
         - name: user-sync-index-v1
           type: users
           id: $.id
@@ -26,20 +26,29 @@ ServiceMaps:
             fieldMapping:
               - inJsonPath: $.lastModifiedBy
                 outJsonPath: $.Data.userId
-              - inJsonPath: $.lastModifiedTime
+              - inJsonPath: $.userName
+                outJsonPath: $.Data.userName
+              - inJsonPath: $.role
+                outJsonPath: $.Data.role
+              - inJsonPath: $.boundaryHierarchy
+                outJsonPath: $.Data.boundaryHierarchy
+              - inJsonPath: $.createdTime
+                outJsonPath: $.Data.clientCreatedTime
+              - inJsonPath: $.syncedTime
                 outJsonPath: $.Data.createdTime
-              - inJsonPath: $.province
-                outJsonPath: $.Data.province
-              - inJsonPath: $.district
-                outJsonPath: $.Data.district
-              - inJsonPath: $.administrativeProvince
-                outJsonPath: $.Data.administrativeProvince
-              - inJsonPath: $.locality
-                outJsonPath: $.Data.locality
-              - inJsonPath: $.village
-                outJsonPath: $.Data.village
-              - inJsonPath: $.latitude
-                outJsonPath: $.Data.latitude
-              - inJsonPath: $.longitude
-                outJsonPath: $.Data.longitude
-          timeStampField: $.lastModifiedTime
+              - inJsonPath: $.syncedTimeStamp
+                outJsonPath: $.Data.syncedTimeStamp
+              - inJsonPath: $.@timestamp
+                outJsonPath: $.Data.@timestamp
+          timeStampField: $.createdTime
+
+    - topic: save-stock-reconciliation-topic
+      configKey: INDEX
+      indexes:
+        - name: stock-reconciliation-index-v1
+          type: reconciliation
+          id: $.id
+          isBulk: true
+          jsonPath: $.*
+          timeStampField: $.auditDetails.createdTime
+
