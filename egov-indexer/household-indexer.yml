@@ -39,6 +39,33 @@ ServiceMaps:
               - inJsonPath: $.@timestamp
                 outJsonPath: $.Data.@timestamp
           timeStampField: $.household.auditDetails.createdTime
+        - name: user-sync-index-v1
+          type: users
+          id: $.household.clientReferenceId
+          isBulk: true
+          jsonPath: $
+          customJsonMapping:
+            indexMapping: { "Data": {} }
+            fieldMapping:
+              - inJsonPath: $.household.auditDetails.lastModifiedBy
+                outJsonPath: $.Data.syncedUserId
+              - inJsonPath: $.userName
+                outJsonPath: $.Data.syncedUserName
+              - inJsonPath: $.nameOfUser
+                outJsonPath: $.Data.nameOfSyncedUser
+              - inJsonPath: $.role
+                outJsonPath: $.Data.role
+              - inJsonPath: $.boundaryHierarchy
+                outJsonPath: $.Data.boundaryHierarchy
+              - inJsonPath: $.household.clientAuditDetails.createdTime
+                outJsonPath: $.Data.clientCreatedTime
+              - inJsonPath: $.household.auditDetails.createdTime
+                outJsonPath: $.Data.createdTime
+              - inJsonPath: $.@timestamp
+                outJsonPath: $.Data.@timestamp
+              - inJsonPath: $.taskDates
+                outJsonPath: $.Data.taskDates
+          timeStampField: $.createdTime
     - topic: delete-household-topic
       configKey: INDEX
       indexes:

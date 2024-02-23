@@ -18,16 +18,16 @@ ServiceMaps:
           timeStampField: $.createdTime
         - name: user-sync-index-v1
           type: users
-          id: $.id
+          id: $.id,$.tenantId,$.clientReferenceId
           isBulk: true
           jsonPath: $
           customJsonMapping:
             indexMapping: { "Data": { } }
             fieldMapping:
               - inJsonPath: $.lastModifiedBy
-                outJsonPath: $.Data.userId
+                outJsonPath: $.Data.syncedUserId
               - inJsonPath: $.userName
-                outJsonPath: $.Data.userName
+                outJsonPath: $.Data.syncedUserName
               - inJsonPath: $.role
                 outJsonPath: $.Data.role
               - inJsonPath: $.boundaryHierarchy
