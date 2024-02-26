@@ -25,9 +25,9 @@ ServiceMaps:
             indexMapping: { "Data": {} }
             fieldMapping:
               - inJsonPath: $.household.auditDetails.lastModifiedBy
-                outJsonPath: $.Data.userId
+                outJsonPath: $.Data.syncedUserId
               - inJsonPath: $.userName
-                outJsonPath: $.Data.userName
+                outJsonPath: $.Data.syncedUserName
               - inJsonPath: $.role
                 outJsonPath: $.Data.role
               - inJsonPath: $.boundaryHierarchy
@@ -38,6 +38,10 @@ ServiceMaps:
                 outJsonPath: $.Data.syncedTimeStamp
               - inJsonPath: $.@timestamp
                 outJsonPath: $.Data.@timestamp
+              - inJsonPath: $.syncedDate
+                outJsonPath: $.Data.syncedDate
+              - inJsonPath: $.taskDates
+                outJsonPath: $.Data.taskDates
           timeStampField: $.household.auditDetails.createdTime
     - topic: delete-household-topic
       configKey: INDEX
