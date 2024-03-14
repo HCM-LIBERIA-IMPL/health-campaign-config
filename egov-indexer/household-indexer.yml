@@ -32,8 +32,10 @@ ServiceMaps:
                 outJsonPath: $.Data.role
               - inJsonPath: $.boundaryHierarchy
                 outJsonPath: $.Data.boundaryHierarchy
-              - inJsonPath: $.household.auditDetails.createdTime
+              - inJsonPath: $.household.clientAuditDetails.createdTime
                 outJsonPath: $.Data.clientCreatedTime
+              - inJsonPath: $.household.auditDetails.createdTime
+                outJsonPath: $.Data.syncedTime
               - inJsonPath: $.syncedTimeStamp
                 outJsonPath: $.Data.syncedTimeStamp
               - inJsonPath: $.@timestamp
