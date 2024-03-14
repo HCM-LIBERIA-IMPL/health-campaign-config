@@ -15,7 +15,7 @@ ServiceMaps:
             fieldMapping:
               - inJsonPath: $
                 outJsonPath: $.Data
-          timeStampField: $.household.auditDetails.createdTime
+          timeStampField: $.household.clientAuditDetails.createdTime
         - name: user-sync-index-v1
           type: users
           id: $.household.clientReferenceId,$.household.id
@@ -42,7 +42,7 @@ ServiceMaps:
                 outJsonPath: $.Data.syncedDate
               - inJsonPath: $.taskDates
                 outJsonPath: $.Data.taskDates
-          timeStampField: $.household.auditDetails.createdTime
+          timeStampField: $.household.clientAuditDetails.createdTime
     - topic: delete-household-topic
       configKey: INDEX
       indexes:
@@ -51,7 +51,7 @@ ServiceMaps:
           id: $.clientReferenceId
           isBulk: true
           jsonPath: $.*
-          timeStampField: $.auditDetails.lastModifiedTime
+          timeStampField: $.clientAuditDetails.lastModifiedTime
     - topic: transformer-producer-household-member-index-v1-topic
       configKey: INDEX
       indexes:
@@ -60,7 +60,7 @@ ServiceMaps:
           id: $.householdMember.id
           isBulk: true
           jsonPath: $.*
-          timeStampField: $.householdMember.auditDetails.createdTime
+          timeStampField: $.householdMember.clientAuditDetails.createdTime
     - topic: delete-household-member-topic
       configKey: INDEX
       indexes:
@@ -69,4 +69,4 @@ ServiceMaps:
           id: $.id
           isBulk: true
           jsonPath: $.*
-          timeStampField: $.auditDetails.lastModifiedTime
+          timeStampField: $.clientAuditDetails.lastModifiedTime
