@@ -78,7 +78,7 @@ serviceMaps:
       userUuidJsonPath: $.[0].auditDetails.lastModifiedBy
       auditAttributeBasePath: $.*   
       queryMaps:
-        - query: UPDATE project_staff SET lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=?, additionalDetails=? WHERE id=?;
+        - query: UPDATE project_resource SET lastModifiedBy=?, lastModifiedTime=?, rowVersion=?, isDeleted=? WHERE id = ?
           basePath: $.*
           jsonMaps:
             - jsonPath: $.*.auditDetails.lastModifiedBy
