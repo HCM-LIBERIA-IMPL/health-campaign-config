@@ -10,7 +10,41 @@ ServiceMaps:
           id: $.household.clientReferenceId
           isBulk: true
           jsonPath: $.*
-          timeStampField: $.household.auditDetails.createdTime
+          customJsonMapping:
+            indexMapping: { "Data": { } }
+            fieldMapping:
+              - inJsonPath: $
+                outJsonPath: $.Data
+          timeStampField: $.household.clientAuditDetails.createdTime
+        - name: user-sync-index-v1
+          type: users
+          id: $.household.clientReferenceId,$.household.id
+          isBulk: true
+          jsonPath: $
+          customJsonMapping:
+            indexMapping: { "Data": {} }
+            fieldMapping:
+              - inJsonPath: $.household.auditDetails.lastModifiedBy
+                outJsonPath: $.Data.syncedUserId
+              - inJsonPath: $.userName
+                outJsonPath: $.Data.syncedUserName
+              - inJsonPath: $.role
+                outJsonPath: $.Data.role
+              - inJsonPath: $.boundaryHierarchy
+                outJsonPath: $.Data.boundaryHierarchy
+              - inJsonPath: $.household.clientAuditDetails.createdTime
+                outJsonPath: $.Data.clientCreatedTime
+              - inJsonPath: $.household.auditDetails.createdTime
+                outJsonPath: $.Data.syncedTime
+              - inJsonPath: $.syncedTimeStamp
+                outJsonPath: $.Data.syncedTimeStamp
+              - inJsonPath: $.@timestamp
+                outJsonPath: $.Data.@timestamp
+              - inJsonPath: $.syncedDate
+                outJsonPath: $.Data.syncedDate
+              - inJsonPath: $.taskDates
+                outJsonPath: $.Data.taskDates
+          timeStampField: $.household.clientAuditDetails.createdTime
     - topic: delete-household-topic
       configKey: INDEX
       indexes:
@@ -19,7 +53,7 @@ ServiceMaps:
           id: $.clientReferenceId
           isBulk: true
           jsonPath: $.*
-          timeStampField: $.auditDetails.lastModifiedTime
+          timeStampField: $.clientAuditDetails.lastModifiedTime
     - topic: transformer-producer-household-member-index-v1-topic
       configKey: INDEX
       indexes:
@@ -28,7 +62,7 @@ ServiceMaps:
           id: $.householdMember.id
           isBulk: true
           jsonPath: $.*
-          timeStampField: $.householdMember.auditDetails.createdTime
+          timeStampField: $.householdMember.clientAuditDetails.createdTime
     - topic: delete-household-member-topic
       configKey: INDEX
       indexes:
@@ -37,4 +71,4 @@ ServiceMaps:
           id: $.id
           isBulk: true
           jsonPath: $.*
-          timeStampField: $.auditDetails.lastModifiedTime
+          timeStampField: $.clientAuditDetails.lastModifiedTime
